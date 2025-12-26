@@ -1,24 +1,34 @@
 # Nextjs Fileserver
 
-This is a simple file server built using nextjs.
+This is a simple file server built with Next.js for serving static files with authentication.
 
 ## Getting Started
 
-### Preparae Docker Compose File
+### Prerequisites
 
-Copy example docker compose file:
+- Docker and Docker Compose installed
+- Node.js (for generating secrets)
+
+
+### Setup Instructions
+
+1. Copy example `docker-compose.yml` file:
 `cp docker-compose.example.yml docker-compose.yml`
 
-Generate JWT_SECRET and copy it into docker-compose file:
+2. Generate `JWT_SECRET` and copy it into `docker-compose.yml` file:
 `node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"`
 
-Generate PASSWORD_HASH and copy it into docker-compose file replacing $ with $$ signs:
+3. Generate `PASSWORD_HASH` and copy it into `docker-compose.yml`:
 ```
 npm install  # if not run already
 node -e "console.log(require('bcryptjs').hashSync('deinpasswort', 10))"
 ```
 
-### Operating the Container
+**Important**: When copying the password hash into `docker-compose.yml`, replace all `$` characters with `$$` (double dollar signs).
+
+4. Edit the `docker-compose.yml` file and specify the path to the folder containing your static files (HTML, CSS, JavaScript, etc.) that you want to serve.
+
+### Container Management
 
 Build and run the container:
 `docker compose up -d --build`
@@ -31,3 +41,9 @@ Retrieve logs of container:
 
 Cleanup all build cache:
 `docker builder prune -af`
+
+## Features
+
+- Serves static files from a configured directory
+- Password-protected access and secure authentication using JWT tokens
+- Easy deployment with Docker
