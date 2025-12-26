@@ -39,6 +39,12 @@ node -e "console.log(require('bcryptjs').hashSync('deinpasswort', 10))"
 Build and run the container:
 `docker compose up -d --build`
 
+Navigate to `http://localhost:3000/fileserver/` to open the application.
+
+**Note**: The application uses the base path `/fileserver` for all its routes.
+To change it go into next.config.js and changed the `basePath` as well es `NEXT_PUBLIC_BASE_PATH` variables.
+You can also remove it completely if you don't need it.
+
 Stop the container:
 `docker compose down`
 

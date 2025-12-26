@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -13,7 +15,7 @@ export default function Login() {
     e.preventDefault();
     setError('');
 
-    const res = await fetch('/api/login', {
+    const res = await fetch(`${basePath}/api/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
@@ -22,7 +24,7 @@ export default function Login() {
     if (res.ok) {
       router.push('/files');
     } else {
-      setError('Falsche Anmeldedaten');
+      setError('Wrong credentials');
     }
   };
 
@@ -33,7 +35,7 @@ export default function Login() {
         <div style={{ marginBottom: '15px' }}>
           <input
             type="text"
-            placeholder="Benutzername"
+            placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             style={{ width: '100%', padding: '10px', fontSize: '16px' }}
@@ -50,7 +52,7 @@ export default function Login() {
         </div>
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <button type="submit" style={{ width: '100%', padding: '10px', fontSize: '16px' }}>
-          Anmelden
+          Login
         </button>
       </form>
     </div>
