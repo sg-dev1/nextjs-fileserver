@@ -1,0 +1,27 @@
+#
+# cp docker-compose.example.yml docker-compose.yml
+#
+# Generate JWT_SECRET:
+# node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"
+#
+# Generate PASSWORD_HASH:
+# npm install  # if not run already
+# node -e "console.log(require('bcryptjs').hashSync('deinpasswort', 10))"
+# ## replace $ signs with $$
+#
+services:
+  nextjs-fileserver:
+    build: .
+    container_name: nextjs-fileserver
+    ports:
+      - "3000:3000"
+    volumes:
+      - /path/to/files/to/serve:/app/public/static:ro
+    environment:
+      - JWT_SECRET=qRYSvlb05eUBPRQB4Ccw14197jEEyE6iL4feZ94apc8TEp7gnKQeVixzi5nRpHZ4gUkVwAovhmFjz/JwLyXqn8Qu4K938yPmmX2zL1GXUpdWGW2Zti+j26/5qADyEty8d+Sz2w7thuOlPoV2ThfflwZysQGRUUlI8E4JxWowyrvovnjI8xKejYeAvIHFnqjR88EUe0GKKav20is5zwiyWsMb//bsPqtRmIponB6L91YZao9iVGXwzYCQ/nl7JJSsQjWmIDTSW9Yep3Wj7wNWYCtP+qO1ULHDsSFFyDtZIOrk8A0D33YMsm/dwPmvMZpFHD569HPNeocZ79ttb6m+og==
+      - USERNAME=admin
+      - PASSWORD_HASH=$$2a$$10$$x8AUXUXQWEP3jnaww6Ymle7Kah8ZEiFn11wLW45IVyWoA.ldfQ6me
+      - NODE_ENV=production
+      #- NODE_ENV=development
+    restart: unless-stopped
+    #tty: true
