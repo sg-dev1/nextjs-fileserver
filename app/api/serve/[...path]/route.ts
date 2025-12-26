@@ -1,8 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-const MIME_TYPES: { [key: string]: string } = {
+export const runtime = 'nodejs'
+
+const MIME_TYPES: Record<string, string> =  {
   '.html': 'text/html',
   '.htm': 'text/html',
   '.css': 'text/css',
@@ -46,10 +48,11 @@ const MIME_TYPES: { [key: string]: string } = {
 };
 
 export async function GET(
-  request: Request,
-  { params }: { params: { path: string[] } }
+  req: NextRequest,
+  { params }: { params: Promise<{ path: string[] }> }
 ) {
-  const filePath = params.path.join('/');
+  const { path: pathParts } = await params;
+  const filePath = pathParts.join('/');
   const fullPath = path.join(process.cwd(), 'public', 'static', filePath);
 
   if (!fs.existsSync(fullPath)) {
