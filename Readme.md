@@ -1,13 +1,19 @@
 # Nextjs Fileserver
 
-This is a simple file server built with Next.js for serving static files with authentication.
+This is a simple file server built with [Next.js](https://nestjs.com/) for serving static files with authentication.
 
 ## Getting Started
 
 ### Prerequisites
 
 - Docker and Docker Compose installed
-- Node.js (for generating secrets)
+- Node.js
+
+- It is recommended to install Node.js using [Node Version Manager](https://github.com/nvm-sh/nvm)
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+nvm install 24
+```
 
 
 ### Setup Instructions
