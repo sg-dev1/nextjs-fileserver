@@ -2,11 +2,13 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
   
   if (!token) {
-    return NextResponse.redirect(new URL('/login', request.url));
+    return NextResponse.redirect(new URL(`${basePath}/login`, request.url));
   }
 
   try {
@@ -14,7 +16,7 @@ export async function middleware(request: NextRequest) {
     await jwtVerify(token, secret);
     return NextResponse.next();
   } catch (error) {
-    return NextResponse.redirect(new URL('/login', request.url));
+    return NextResponse.redirect(new URL(`${basePath}/login`, request.url));
   }
 }
 
