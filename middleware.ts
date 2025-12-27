@@ -21,5 +21,10 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/files/:path*', '/'],
+  matcher: [
+    '/',
+    '/files/:path*',
+    '/api/serve/:path*',
+    '/api/files'
+  ],
 };
